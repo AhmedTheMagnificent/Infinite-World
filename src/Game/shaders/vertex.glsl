@@ -8,6 +8,9 @@ uniform int   uOctaves;     // number of noise layers (detail level)
 uniform float uLacunarity;  // how frequency increases per octave
 uniform float uPersistence; // how amplitude decreases per octave
 
+uniform float uChunkOffsetX;
+uniform float uChunkOffsetZ;
+
 
 vec4 permute(vec4 x) { return mod(((x * 34.0) + 1.0) * x, 289.0); }
 vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
@@ -213,11 +216,20 @@ float fbm(vec3 p){
     return value;
 }
 
-vec3 getDisplacedPosition(vec3 pos){
-    float height = fbm(pos);
+vec3 getDisplacedPosition(vec3 pos) {
+    // pos is in local plane space: X = world X, Y = world -Z (due to rotation)
+    vec3 worldPos;
+    worldPos.x = pos.x + uChunkOffsetX;
+    worldPos.y = pos.y + uChunkOffsetZ;  // local Y = world Z before rotation
+    worldPos.z = 0.0;
+
+    float height = fbm(worldPos);
     vHeight = height;
+
     vec3 displaced = pos;
-    displaced.z += height;
+    displaced.x += uChunkOffsetX;   // physically place mesh in world X
+    displaced.y += uChunkOffsetZ;   // physically place mesh in world Z
+    displaced.z += height;          // displace upward (becomes world Y after rotation)
     return displaced;
 }
 

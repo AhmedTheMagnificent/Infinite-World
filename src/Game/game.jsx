@@ -1,21 +1,15 @@
-import { useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
+import Debug from './Debug'
+import ChunkManager from './ChunkManager'
+import Player from './Player'
 
-export default function Cube() {
-  const cubeRef = useRef()
+export default function Game() {
+    const debug = Debug()
 
-  useFrame(() => {
-    cubeRef.current.rotation.x += 0.01
-    cubeRef.current.rotation.y += 0.013
-  })
+    return (
+        <>
+            <Player />
+            <ChunkManager debug={debug} />
+        </>
 
-  return (
-    <>
-      <mesh ref={cubeRef} position={[0, 0, 0]}>
-        <icosahedronGeometry args={[1]} />
-        <meshNormalMaterial />
-      </mesh>
-      
-    </>
-  )
+    )
 }
