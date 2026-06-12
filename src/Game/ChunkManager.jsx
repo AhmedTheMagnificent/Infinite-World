@@ -9,7 +9,7 @@ function getChunksAround(cx, cz) {
     const next = []
     for (let x = cx - RENDER_DISTANCE; x <= cx + RENDER_DISTANCE; x++) {
         for (let z = cz - RENDER_DISTANCE; z <= cz + RENDER_DISTANCE; z++) {
-            next.push({ chunkX: x, chunkZ: z, key: `${x},${z}` })
+            next.push({ chunkX: x, chunkZ: -z, key: `${x},${z}` })
         }
     }
     return next
@@ -26,8 +26,8 @@ export default function ChunkManager({ debug }) {
     }, [])
 
     useFrame(() => {
-        const camChunkX = Math.round(camera.position.x / CHUNK_SIZE)
-        const camChunkZ = Math.round(camera.position.z / CHUNK_SIZE)
+        const camChunkX = Math.floor(camera.position.x / CHUNK_SIZE)
+        const camChunkZ = Math.floor(camera.position.z / CHUNK_SIZE)
 
         if (
             camChunkX === lastCamChunk.current.x &&

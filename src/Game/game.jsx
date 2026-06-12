@@ -6,7 +6,7 @@ export default function Game() {
     const debug = Debug()
 
     return (
-        <>
+        <>  
             <Player />
             <ChunkManager debug={debug} />
         </>

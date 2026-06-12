@@ -4,7 +4,7 @@ import './App.css'
 
 export default function App() {
     return (
-        <Canvas camera={{ position: [0, 6, 10], fov: 60 }}>
+        <Canvas camera={{ position: [0, 0, 1], fov: 60 }}>
             
             <ambientLight intensity={0.4} />
             <directionalLight position={[5, 10, 5]} intensity={1} />
