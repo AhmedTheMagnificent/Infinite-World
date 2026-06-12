@@ -10,9 +10,12 @@ export default function Cube() {
   })
 
   return (
-    <mesh ref={cubeRef}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshNormalMaterial color="#44aa88" />
-    </mesh>
+    <>
+      <mesh ref={cubeRef} position={[0, 0, 0]}>
+        <icosahedronGeometry args={[1]} />
+        <meshNormalMaterial />
+      </mesh>
+      
+    </>
   )
 }
